@@ -37,7 +37,8 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
-        return null;
+        String userLogin = userService.userLogin(logInDTO);
+        response.setHeader("Authorization",userLogin);
+        return new ResponseEntity("LOGIN SUCCESSFUL", HttpStatus.OK);
     }
-
 }

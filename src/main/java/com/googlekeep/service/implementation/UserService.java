@@ -1,5 +1,6 @@
 package com.googlekeep.service.implementation;
 
+import com.googlekeep.dto.LoginDTO;
 import com.googlekeep.dto.RegistrationDTO;
 import com.googlekeep.exceptions.UserServiceException;
 import com.googlekeep.model.UserDetails;
@@ -31,5 +32,14 @@ public class UserService implements IUserService {
         userDetails.password = password;
         userRepository.save(userDetails);
         return "Verification Mail Has Been Sent Successfully";
+    }
+
+    @Override
+    public String userLogin(LoginDTO logInDTO) {
+        Optional<UserDetails> userDetail = userRepository.findByEmailID(logInDTO.emailID);
+        if (userDetail.isPresent()) {
+            boolean password = bCryptPasswordEncoder.matches(logInDTO.password, userDetail.get().password);
+        }
+        throw new UserServiceException("INCORRECT PASSWORD");
     }
 }
