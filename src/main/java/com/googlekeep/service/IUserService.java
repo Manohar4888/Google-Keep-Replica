@@ -10,6 +10,6 @@ public interface IUserService {
     String userRegistration(RegistrationDTO registrationDTO);
 
     String userLogin(LoginDTO logInDTO);
-
+    String sendVerificationMail(String email, String requestURL) throws MessagingException;
 }
 
