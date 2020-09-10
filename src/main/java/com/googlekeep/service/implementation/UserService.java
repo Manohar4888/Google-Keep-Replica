@@ -31,6 +31,7 @@ public class UserService implements IUserService {
         UserDetails userDetails = new UserDetails(registrationDTO);
         userDetails.password = password;
         userRepository.save(userDetails);
+
         return "Verification Mail Has Been Sent Successfully";
     }
 
