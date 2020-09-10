@@ -6,12 +6,15 @@ import com.googlekeep.model.UserDetails;
 import com.googlekeep.repository.IUserRepository;
 import com.googlekeep.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private IUserRepository userRepository;
@@ -22,7 +25,9 @@ public class UserService implements IUserService {
         if (userDetail.isPresent()) {
             throw new UserServiceException("USER ALREADY EXISTS WITH THIS EMAIL ID");
         }
+        String password = bCryptPasswordEncoder.encode(registrationDTO.password);
         UserDetails userDetails = new UserDetails(registrationDTO);
+        userDetails.password = password;
         userRepository.save(userDetails);
         return "Verification Mail Has Been Sent Successfully";
     }

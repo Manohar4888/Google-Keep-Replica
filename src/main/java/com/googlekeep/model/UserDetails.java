@@ -33,5 +33,4 @@ public class UserDetails {
         this.fullName = registrationDTO.fullName;
         this.isVerified = registrationDTO.isVerified;
     }
-
 }
