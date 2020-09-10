@@ -1,5 +1,6 @@
 package com.googlekeep.controller;
 
+import com.googlekeep.dto.LoginDTO;
 import com.googlekeep.dto.RegistrationDTO;
 import com.googlekeep.dto.ResponseDTO;
 import com.googlekeep.service.IUserService;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -25,8 +27,17 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.BAD_REQUEST);
         }
-        String message = userService.userRegistration(registrationDTO,request.getHeader("Referer"));
+        String message = userService.userRegistration(registrationDTO, request.getHeader("Referer"));
         ResponseDTO responseDTO = new ResponseDTO(message);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity userLogin(@Valid @RequestBody LoginDTO logInDTO, BindingResult bindingResult, HttpServletResponse response) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+        return null;
+    }
+
 }
