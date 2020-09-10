@@ -22,7 +22,7 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
 
     @Override
-    public String userRegistration(RegistrationDTO registrationDTO, String referer) {
+    public String userRegistration(RegistrationDTO registrationDTO) {
         Optional<UserDetails> userDetail = userRepository.findByEmailID(registrationDTO.emailID);
         if (userDetail.isPresent()) {
             throw new UserServiceException("USER ALREADY EXISTS WITH THIS EMAIL ID");
@@ -39,6 +39,7 @@ public class UserService implements IUserService {
         Optional<UserDetails> userDetail = userRepository.findByEmailID(logInDTO.emailID);
         if (userDetail.isPresent()) {
             boolean password = bCryptPasswordEncoder.matches(logInDTO.password, userDetail.get().password);
+            return "Login Successful";
         }
         throw new UserServiceException("INCORRECT PASSWORD");
     }

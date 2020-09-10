@@ -27,7 +27,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.BAD_REQUEST);
         }
-        String message = userService.userRegistration(registrationDTO, request.getHeader("Referer"));
+        String message = userService.userRegistration(registrationDTO);
         ResponseDTO responseDTO = new ResponseDTO(message);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
