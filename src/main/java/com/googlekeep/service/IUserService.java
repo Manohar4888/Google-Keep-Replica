@@ -7,9 +7,9 @@ import javax.mail.MessagingException;
 
 public interface IUserService {
 
-    String userRegistration(RegistrationDTO registrationDTO);
+    String userRegistration(RegistrationDTO registrationDTO) throws MessagingException;
 
     String userLogin(LoginDTO logInDTO);
-    String sendVerificationMail(String email, String requestURL) throws MessagingException;
+    String sendVerificationMail(String email) throws MessagingException;
 }
 

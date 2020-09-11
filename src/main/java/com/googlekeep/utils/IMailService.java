@@ -1,6 +1,4 @@
 package com.googlekeep.utils;
-
-
 import javax.mail.MessagingException;
 
 public interface IMailService {
