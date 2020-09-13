@@ -1,4 +1,5 @@
 package com.googlekeep.service.implementation;
+
 import com.googlekeep.dto.LoginDTO;
 import com.googlekeep.dto.RegistrationDTO;
 import com.googlekeep.exceptions.UserServiceException;
@@ -10,6 +11,7 @@ import com.googlekeep.utils.implementation.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import javax.mail.MessagingException;
 import java.util.Optional;
 
@@ -47,7 +49,9 @@ public class UserService implements IUserService {
         Optional<UserDetails> userDetail = userRepository.findByEmailID(logInDTO.emailID);
         if (userDetail.isPresent()) {
             boolean password = bCryptPasswordEncoder.matches(logInDTO.password, userDetail.get().password);
-            return "Login Successful";
+            if (password) {
+                return "Login Successful";
+            }
         }
         throw new UserServiceException("INCORRECT PASSWORD");
     }
